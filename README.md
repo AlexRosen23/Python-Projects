@@ -91,7 +91,8 @@ squares. Two squares share at most one line, so the first match is the only one.
 | 2024-04-29 | `7f2822f` | first README (a short introduction) |
 | 2024-04-29 | `2da30bb` | `ECGSequence.py` |
 | 2026-11-07 | `817d23b`, [PR #1](https://github.com/AlexRosen23/Python-Projects/pull/1) | README rewritten with Claude Code |
-| 2026-11-09 | this PR | this write-up, with the code re-run and its limits measured |
+| 2026-11-09 | [PR #2](https://github.com/AlexRosen23/Python-Projects/pull/2) | full write-up, with the code re-run and its limits measured |
+| 2026-11-10 | audit | `.gitignore` for Python caches and virtual environments |
 
 The two programs were written in April 2024, before Claude Code existed, and no Claude Code session on record
 touched the code. The only AI-assisted changes are the README rewrites in 2026.
@@ -112,6 +113,7 @@ touched the code. The only AI-assisted changes are the README rewrites in 2026.
 | `ECGSequence.py` | EKG sequence index finder (40 lines) |
 | `tic_tac_toe_blocker.py` | tic-tac-toe blocking move (40 lines) |
 | `README.md` | this file |
+| `.gitignore` | keeps `__pycache__/`, virtual environments and macOS metadata out of git |
 
 ## Testing and CI
 
