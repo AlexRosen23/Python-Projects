@@ -1,10 +1,29 @@
 # Python Projects
 
-Two short, standalone Python programs written in April 2024 while I was studying at the Luddy School of
-Informatics, Computing, and Engineering at Indiana University. `ECGSequence.py` finds where a number first
-appears in the EKG sequence, and `tic_tac_toe_blocker.py` returns the square that blocks a two-in-a-row in
-tic-tac-toe. This is early learning work, kept public as a record of where my Python started. It is small on
-purpose, and this README describes it at that size.
+**Two small, standalone Python programs that each solve one puzzle: finding where a number first appears in the EKG number sequence, and picking the square that blocks a two-in-a-row in tic-tac-toe.**
+
+## What it does
+
+- `ECGSequence.py` builds the EKG sequence (OEIS [A064413](https://oeis.org/A064413)) only as far as needed and returns the 0-based position of a number you ask about, e.g. 3, 5 and 7 are at positions 4, 9 and 13.
+- `tic_tac_toe_blocker.py` takes two squares (0-8) held by one player and returns the third square on their shared line, or `-1` if they do not share one.
+- Both are written to be read: the EKG code uses a list and a set, and the blocker models the 8 winning lines as plain data instead of special cases.
+
+## Who it is for
+
+Readers who want to see early, coursework-style Python (written April 2024) and how a precise rule turns into a few lines of code. It is not a library or a tool, and no further work is planned. This README describes it at that small size.
+
+## How it works
+
+The EKG program keeps the sequence so far plus a set of used numbers, then repeatedly appends the smallest unused number that shares a factor greater than 1 with the last term, until the requested number appears. The blocker looks up the one winning line that contains both squares and returns its remaining square. A diagram is in [How it works (detail)](#how-it-works-detail) below.
+
+## Try it
+
+```bash
+git clone https://github.com/AlexRosen23/Python-Projects.git
+cd Python-Projects
+python3 ECGSequence.py            # prints 4, 9 and 13
+python3 -c "from tic_tac_toe_blocker import tic_tac_toe_blocker as b; print(b(0, 1))"   # prints 2
+```
 
 ## At a glance
 
@@ -56,7 +75,7 @@ python3 -c "from tic_tac_toe_blocker import tic_tac_toe_blocker as b; print(b(0,
 `python3 tic_tac_toe_blocker.py` on its own prints nothing: it only defines the function, and its example call is
 a comment. The `ECGSequence` examples run only when the file is run directly, not when it is imported.
 
-## How it works
+## How it works (detail)
 
 ```mermaid
 flowchart LR
