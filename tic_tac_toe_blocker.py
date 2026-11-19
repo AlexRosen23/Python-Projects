@@ -19,6 +19,10 @@ def tic_tac_toe_blocker(pos1, pos2):
     # ---------
     # 6 | 7 | 8
     
+    # Two different squares on the board are needed; anything else has no single block
+    if pos1 == pos2 or not (0 <= pos1 <= 8 and 0 <= pos2 <= 8):
+        return -1
+
     # All possible winning combinations in tic-tac-toe
     winning_combinations = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],  # Horizontal lines

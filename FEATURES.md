@@ -8,7 +8,7 @@ tic-tac-toe. They are early learning exercises, kept public as a record, and thi
 can see or use updates this file in the same PR (see "Keeping this file true").
 
 - **Repo:** AlexRosen23/Python-Projects (public) · **Folder:** none (no local folder; edited through fresh clones)
-- **Status:** Finished small exercises, no further work planned · **Version:** none · **`main`:** `84c4b91` (2026-11-15)
+- **Status:** Finished small exercises, no further work planned · **Version:** none · **`main`:** `a4ea858` (2026-11-15)
 - **Last updated:** 2026-11-15, written from the code, README and git history.
 
 **Status words** (a feature with no status word is live):
@@ -21,11 +21,11 @@ can see or use updates this file in the same PR (see "Keeping this file true").
 | | |
 | --- | --- |
 | Stack | Python 3, standard library only (checked by the README with 3.9.6) |
-| Code | 2 files, 40 lines each (80 total) |
+| Code | 2 files, 45 and 44 lines (89 total) |
 | Dependencies | none |
 | Tests / CI | none; no workflow files |
-| Merged PRs | 3 (all README or `.gitignore` changes) |
-| Commits | 7 on `main` |
+| Merged PRs | 4 (all README, `.gitignore` or docs changes) |
+| Commits | 8 on `main` |
 
 ## Contents
 1. What it is and who it's for
@@ -54,7 +54,7 @@ python3 ECGSequence.py
 python3 -c "from tic_tac_toe_blocker import tic_tac_toe_blocker as b; print(b(0, 1))"
 ```
 
-- `python3 ECGSequence.py` prints `4`, `9`, `13` because the example calls run at module level.
+- `python3 ECGSequence.py` prints `4`, `9`, `13` (the examples sit under a `__main__` guard, so importing it prints nothing).
 - `python3 tic_tac_toe_blocker.py` prints nothing: it only defines the function; its example is a comment.
 - Environment variables, ports, launch config: none.
 
@@ -65,6 +65,7 @@ python3 -c "from tic_tac_toe_blocker import tic_tac_toe_blocker as b; print(b(0,
 | `ECGSequence.py` | EKG sequence index finder |
 | `tic_tac_toe_blocker.py` | tic-tac-toe blocking move |
 | `README.md` | overview, how it was verified, limits |
+| `FEATURES.md` | this feature list |
 | `.gitignore` | keeps `__pycache__/`, `*.pyc`, `.venv/`, `venv/` and `.DS_Store` out of git |
 
 The two files are independent. Neither imports the other.
@@ -76,17 +77,17 @@ The two files are independent. Neither imports the other.
 - **Generate only as far as needed**: the function extends the sequence until `n` appears, then stops. `ECGSequence.py`
 - **Shared-factor check**: an inner helper tests two numbers by trial division from 2 up to the smaller one. `ECGSequence.py`
 - **Fast set lookup**: a set of used numbers makes the "already used?" test constant-time; a list keeps the order for the final `index` call. `ECGSequence.py`
-- **Built-in examples**: three calls at the bottom print the positions of 3, 5 and 7 (expected `4`, `9`, `13`). `ECGSequence.py`
+- **Input check**: `n < 1` raises `ValueError` instead of looping forever. `ECGSequence.py`
+- **Built-in examples**: three calls at the bottom, under a `__main__` guard, print the positions of 3, 5 and 7 (expected `4`, `9`, `13`). `ECGSequence.py`
 
 ### Tic-tac-toe blocker (`tic_tac_toe_blocker.py`)
 - **`tic_tac_toe_blocker(pos1, pos2)`**: takes two squares (0 to 8, numbered row by row) held by one player and returns the third square of the line that contains both. `tic_tac_toe_blocker.py`
 - **Rule as data**: the 8 winning lines (3 rows, 3 columns, 2 diagonals) are a list; the function returns the remaining square of the first line holding both. `tic_tac_toe_blocker.py`
-- **No-block answer**: returns `-1` when no line holds both squares. `tic_tac_toe_blocker.py`
+- **No-block answer**: returns `-1` when no line holds both squares, or when the squares are equal or outside 0 to 8. `tic_tac_toe_blocker.py`
 - **Documented**: a docstring explains the parameters, the return value and the board numbering. `tic_tac_toe_blocker.py`
 
 ### Not built
-- **Input checks** *(Planned, only "if revisited")*: guards for a non-positive `n` and for repeated or out-of-range squares.
-- **`__main__` guard** *(Planned, only "if revisited")*: so importing `ECGSequence` does not print.
+- **Type checks** *(Planned, only "if revisited")*: neither function checks argument types.
 - **Tests** *(Planned, only "if revisited")*: a few `pytest` cases from OEIS A064413.
 
 ## 5. Integrations
@@ -108,10 +109,7 @@ The two files are independent. Neither imports the other.
 
 ## 8. Known limits and gaps
 
-- `ecg_seq_index(0)` or a negative number never returns: 0 and negatives never enter the sequence. *(recorded in the README, 2026-11-09)*
-- `tic_tac_toe_blocker(4, 4)` returns `3` instead of rejecting a repeated square. It also does not check that squares are in 0 to 8. *(recorded in the README)*
 - The blocker only handles one pair of squares; it does not look at the whole board or at which squares are already taken.
-- Example calls in `ECGSequence.py` run on import.
 - The shared-factor test is quadratic-ish; fine for small `n`.
 - No license file, so default copyright applies.
 
@@ -119,6 +117,8 @@ The two files are independent. Neither imports the other.
 
 | Date | PR | Change |
 | --- | --- | --- |
+| 2026-11-18 | this PR | `ecg_seq_index` rejects `n < 1`; the blocker returns `-1` for bad squares; `__main__` guard on the examples; README map and counts refreshed. |
+| 2026-11-15 | #4 | Added this file. |
 | 2026-11-10 | #3 | README links the merged PR; added `.gitignore` for Python caches and virtual environments. |
 | 2026-11-10 | #2 | Full README write-up (why, what works, verified limits). |
 | 2026-11-07 | #1 | Professional README (overview, stack, run steps, build stats). |
@@ -127,6 +127,6 @@ The two files are independent. Neither imports the other.
 ## Keeping this file true
 
 - **Same PR, same change:** a PR that changes a function, its output or the files here updates this file too.
-- **Status moves with reality:** if a guard, test or `__main__` block is added, move it out of "Not built".
+- **Status moves with reality:** if a type check or test is added, move it out of "Not built".
 - **Only what is true:** re-check the behaviour claims by running the examples before editing them.
 - **Public repo rule:** this file is public. No private details, no secrets, no machine paths.

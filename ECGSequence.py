@@ -1,4 +1,8 @@
 def ecg_seq_index(n):
+    # Only positive integers ever appear in the sequence; anything else would loop forever
+    if n < 1:
+        raise ValueError("n must be a positive integer")
+
     # Checks if two numbers share a factor greater than 1
     def share_factor(x, y):
         min_val = min(x, y)
@@ -34,7 +38,8 @@ def ecg_seq_index(n):
     # Return the index of 'n' in the sequence (0-based index)
     return sequence.index(n)
 
-# Example usage:
-print(ecg_seq_index(3))  # Output should be 4
-print(ecg_seq_index(5))  # Output should be 9
-print(ecg_seq_index(7))  # Output should be 13
+if __name__ == "__main__":
+    # Example usage:
+    print(ecg_seq_index(3))  # Output should be 4
+    print(ecg_seq_index(5))  # Output should be 9
+    print(ecg_seq_index(7))  # Output should be 13

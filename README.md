@@ -38,8 +38,8 @@ rule as data. They are not a library or a tool.
 | capability | status | how it was verified |
 |---|---|---|
 | `ecg_seq_index(n)` returns the 0-based index of `n` in the EKG sequence | Working for `n ≥ 1` | `python3 ECGSequence.py` printed `4`, `9`, `13` (2026-11-09); the indices of the first 20 terms all match OEIS A064413 (checked with a throwaway script, not committed) |
-| `tic_tac_toe_blocker(pos1, pos2)` returns the blocking square, or `-1` | Working for two different squares 0–8 | called directly on 2026-11-09: `(0,1)→2`, `(1,0)→2`, `(2,4)→6`, `(0,5)→-1` |
-| Input validation | Not built | `ecg_seq_index(0)` never returns (0 never enters the sequence); `tic_tac_toe_blocker(4, 4)` returns `3` instead of rejecting a repeated square |
+| `tic_tac_toe_blocker(pos1, pos2)` returns the blocking square, or `-1` | Working for two different squares 0–8; anything else returns `-1` | called directly on 2026-11-09: `(0,1)→2`, `(1,0)→2`, `(2,4)→6`, `(0,5)→-1` |
+| Input validation | Basic | `ecg_seq_index(n)` raises `ValueError` for `n < 1` (it used to loop forever); `tic_tac_toe_blocker` returns `-1` for a repeated or out-of-range square (it used to return a meaningless square) |
 | Tests | Not built | none in the repo |
 
 ## Quick start
@@ -54,8 +54,7 @@ python3 -c "from tic_tac_toe_blocker import tic_tac_toe_blocker as b; print(b(0,
 ```
 
 `python3 tic_tac_toe_blocker.py` on its own prints nothing: it only defines the function, and its example call is
-a comment. Importing `ECGSequence` also prints the three example results, because the example calls run at
-module level.
+a comment. The `ECGSequence` examples run only when the file is run directly, not when it is imported.
 
 ## How it works
 
@@ -99,20 +98,20 @@ touched the code. The only AI-assisted changes are the README rewrites in 2026.
 
 ## Limitations and what's next
 
-- **No input validation.** A non-positive `n` makes `ecg_seq_index` loop forever, and a repeated or out-of-range
-  square gives the blocker a meaningless answer.
-- **Example calls run on import** in `ECGSequence.py`. A `if __name__ == "__main__":` guard would fix that.
+- **Only basic input validation.** `ecg_seq_index` rejects `n < 1` with a `ValueError` and the blocker returns `-1` for a
+  repeated or out-of-range square, but neither checks types.
 - **No tests.** The checks above were run by hand for this README.
-- **Next, if this repo is ever revisited:** add the guards above and a few `pytest` cases built from OEIS A064413.
+- **Next, if this repo is ever revisited:** add a few `pytest` cases built from OEIS A064413.
   Nothing is planned. Newer work lives in other repositories.
 
 ## Repository map
 
 | path | what it is |
 |---|---|
-| `ECGSequence.py` | EKG sequence index finder (40 lines) |
-| `tic_tac_toe_blocker.py` | tic-tac-toe blocking move (40 lines) |
+| `ECGSequence.py` | EKG sequence index finder (45 lines) |
+| `tic_tac_toe_blocker.py` | tic-tac-toe blocking move (44 lines) |
 | `README.md` | this file |
+| `FEATURES.md` | feature-by-feature rundown |
 | `.gitignore` | keeps `__pycache__/`, virtual environments and macOS metadata out of git |
 
 ## Testing and CI
