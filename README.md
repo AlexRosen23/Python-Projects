@@ -1,5 +1,7 @@
 # Python Projects
 
+**Small Python projects collection**
+
 **Two small, standalone Python programs that each solve one puzzle: finding where a number first appears in the EKG number sequence, and picking the square that blocks a two-in-a-row in tic-tac-toe.**
 
 ## What it does
